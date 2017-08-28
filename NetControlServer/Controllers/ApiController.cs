@@ -1,7 +1,7 @@
-﻿using NetControlClient.Responses;
-using NetControlCommon;
+﻿using NetControlCommon;
+using NetControlServer.Responses;
 
-namespace NetControlClient.Controllers
+namespace NetControlServer.Controllers
 {
     public class ApiController : IController
     {

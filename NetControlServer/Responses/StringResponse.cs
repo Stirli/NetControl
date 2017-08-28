@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using NetControlCommon;
 
-namespace NetControlClient.Responses
+namespace NetControlServer.Responses
 {
     public class StringResponse:IRequestResponse
     {

@@ -100,7 +100,7 @@ namespace NetControlCommon
             catch (Exception ex)
             {
                 if (ex.InnerException is TaskCanceledException &&
-                    (ex.InnerException as TaskCanceledException).Task.IsCanceled)
+                    ((TaskCanceledException) ex.InnerException).Task.IsCanceled)
                 {
                     log("Сервер остановлен успешно", "Сервер.");
                     Stopped?.Invoke(this, new EventArgs());

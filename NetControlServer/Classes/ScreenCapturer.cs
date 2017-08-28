@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Point = System.Windows.Point;
 
-namespace NetControlClient
+namespace NetControlServer
 {
     public static class ScreenCapturer
     {

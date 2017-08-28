@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8DFD14B8-6842-467F-AFAF-B68296F546FF}</ProjectGuid>
+    <ProjectGuid>{1C3B9B6B-47C8-4E6A-94A9-147734C4D5D4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>NetControlClient</RootNamespace>
     <AssemblyName>NetControlClient</AssemblyName>
@@ -36,8 +36,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,13 +54,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Responses\StringResponse.cs" />
-    <Compile Include="Controllers\ApiController.cs" />
-    <Compile Include="Responses\PngResponse.cs" />
-    <Compile Include="Classes\ScreenCapturer.cs" />
-    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="AsynchronousCommand.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="ObservableCollectionHelpers.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModel.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Client.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

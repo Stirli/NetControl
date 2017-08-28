@@ -1,6 +1,6 @@
 ﻿using NetControlCommon;
 
-namespace NetControlClient.Responses
+namespace NetControlServer.Responses
 {
     class PngResponse:IRequestResponse
     {
