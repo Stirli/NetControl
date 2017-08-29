@@ -19,16 +19,16 @@ namespace NetControlServer.Classes
             var width = right - left;
             var height = bottom - top;
 
-            using (var screenBmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            using (var screenBmp = new Bitmap((int)(size != default(Size) ? size.Width : width), (int)(size != default(Size) ? size.Height : height), PixelFormat.Format32bppArgb))
             {
-
                 using (var bmpGraphics = Graphics.FromImage(screenBmp))
                 {
+                    if (size != default(Size))
+                    {
+                        bmpGraphics.ScaleTransform((float)(size.Width / width), (float)(size.Height / height));
+                    }
                     bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
-                    if (size == default(Size)) bmpGraphics.ScaleTransform((float)(size.Width / width), (float)(size.Height / height));
                     Byte[] imageArray;
-
-
                     using (MemoryStream outputStream = new MemoryStream())
                     {
                         screenBmp.Save(outputStream, ImageFormat.Png);

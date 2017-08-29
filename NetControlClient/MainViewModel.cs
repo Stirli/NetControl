@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using NetControlClient.Properties;
 
 namespace NetControlClient
 {
@@ -41,7 +42,7 @@ namespace NetControlClient
         {
             const string testMessage = "EchoMessageЭхоСообщение202";
             Servers = new ObservableCollection<Server>();
-            foreach (var client in Properties.Settings.Default.Servers)
+            foreach (var client in Settings.Default.Servers)
             {
                 var req = WebRequest.CreateHttp($"http://{client}:8080/test/echo?mes={testMessage}");
                 Runner.IgnoreErr(() =>

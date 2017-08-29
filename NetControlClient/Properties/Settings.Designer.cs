@@ -51,7 +51,7 @@ namespace NetControlClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1260,700")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1280,720")]
         public string ScreenshotSize {
             get {
                 return ((string)(this["ScreenshotSize"]));

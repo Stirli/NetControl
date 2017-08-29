@@ -12,7 +12,7 @@
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="ScreenshotSize" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1260,700</Value>
+      <Value Profile="(Default)">1280,720</Value>
     </Setting>
   </Settings>
 </SettingsFile>
