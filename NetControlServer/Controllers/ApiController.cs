@@ -1,4 +1,6 @@
-﻿using NetControlCommon;
+﻿using System.Windows;
+using NetControlCommon;
+using NetControlServer.Classes;
 using NetControlServer.Responses;
 
 namespace NetControlServer.Controllers
@@ -13,6 +15,11 @@ namespace NetControlServer.Controllers
         public IRequestResponse PrtSc()
         {
             return new PngResponse(ScreenCapturer.Take());
+        }
+        public IRequestResponse PrtSc(string size)
+        {
+            var s = Size.Parse(size);
+            return new PngResponse(ScreenCapturer.Take(s));
         }
     }
 }

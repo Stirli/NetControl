@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace NetControlClient
 {
@@ -34,33 +35,49 @@ namespace NetControlClient
             }
         }
 
-        public ObservableCollection<Client> Clients { get; }
+        public ObservableCollection<Server> Servers { get; }
 
         public MainViewModel()
         {
             const string testMessage = "EchoMessageЭхоСообщение202";
-            Clients = new ObservableCollection<Client>();
-            foreach (var client in Properties.Settings.Default.Clients)
+            Servers = new ObservableCollection<Server>();
+            foreach (var client in Properties.Settings.Default.Servers)
             {
                 var req = WebRequest.CreateHttp($"http://{client}:8080/test/echo?mes={testMessage}");
-
-                var resp = req.GetResponse();
-                if (req.HaveResponse)
+                Runner.IgnoreErr(() =>
                 {
-                    var str = new StreamReader(resp.GetResponseStream()).ReadToEnd();
-                    if (str.Equals(testMessage))
+                    var resp = req.GetResponse();
+                    if (req.HaveResponse)
                     {
-                        Clients.Add_s(new Client(client));
+                        var str = new StreamReader(resp.GetResponseStream()).ReadToEnd();
+                        if (str.Equals(testMessage))
+                        {
+                            Servers.Add_s(new Server(client));
+                        }
                     }
-                }
+                });
+
             }
-            _timer = new Timer(TimerWork,null,5000,5000);
+            _timer = new Timer(TimerWork, null, 5000, Properties.Settings.Default.RefreshPeriod);
+        }
+
+        public Server SelectedServer
+        {
+            get => _selectedServer;
+            set
+            {
+                if (Equals(value, _selectedServer)) return;
+                _selectedServer = value;
+                OnPropertyChanged();
+            }
         }
 
         Timer _timer;
+        private Server _selectedServer;
+
         private void TimerWork(object state)
         {
-            Clients.Refresh();
+            Runner.InMainDispatcher(() => Servers.Refresh());
         }
     }
 }

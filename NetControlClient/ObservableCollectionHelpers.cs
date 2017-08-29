@@ -21,10 +21,15 @@ namespace NetControlClient
         {
             collection.GetDispatcher().Invoke(() => collection.Add(item));
         }
-        public static void Refresh<T>(this ObservableCollection<T> collection)
+        public static void Refresh(this ObservableCollection<Server> collection)
         {
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(collection);
-            view.Refresh();
+            collection.GetDispatcher().Invoke(async () =>
+            {
+                foreach (var server in collection)
+                {
+                    await server.Refresh();
+                }
+            });
         }
     }
 }

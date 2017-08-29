@@ -28,12 +28,36 @@ namespace NetControlClient.Properties {
         [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
             "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
             "tring>DESKTOP-DNLCJ2N</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Clients {
+        public global::System.Collections.Specialized.StringCollection Servers {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Clients"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["Servers"]));
             }
             set {
-                this["Clients"] = value;
+                this["Servers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int RefreshPeriod {
+            get {
+                return ((int)(this["RefreshPeriod"]));
+            }
+            set {
+                this["RefreshPeriod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1260,700")]
+        public string ScreenshotSize {
+            get {
+                return ((string)(this["ScreenshotSize"]));
+            }
+            set {
+                this["ScreenshotSize"] = value;
             }
         }
     }
