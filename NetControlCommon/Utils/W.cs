@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NetControlCommon
+﻿namespace NetControlCommon.Utils
 {
+    /// <summary>
+    /// Wrap
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class W<T>
     {
         public W(T v)

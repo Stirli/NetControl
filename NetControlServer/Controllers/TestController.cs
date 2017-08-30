@@ -1,4 +1,5 @@
 ﻿using NetControlCommon;
+using NetControlCommon.Interfaces;
 using NetControlServer.Responses;
 
 namespace NetControlServer.Controllers

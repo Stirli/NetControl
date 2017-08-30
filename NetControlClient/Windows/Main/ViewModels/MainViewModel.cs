@@ -1,14 +1,14 @@
-﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
+using NetControlClient.MVVM;
 using NetControlClient.Properties;
+using NetControlClient.Utils;
 using NetControlCommon;
+using NetControlCommon.Utils;
 
-namespace NetControlClient
+namespace NetControlClient.Windows.Main.ViewModels
 {
     class MainViewModel : ViewModel
     {
@@ -46,13 +46,9 @@ namespace NetControlClient
             {
                 Servers.Add_s(new Server(client));
             }
-            task = TimerWork().ContinueWith(ContinueTask);
+            RunRefreshTask();
         }
 
-        private void ContinueTask(Task task1)
-        {
-            task = TimerWork().ContinueWith(ContinueTask);
-        }
         public Server SelectedServer
         {
             get => _selectedServer;
@@ -64,10 +60,14 @@ namespace NetControlClient
             }
         }
 
-        private Task task;
         private Server _selectedServer;
 
-        private async Task TimerWork()
+        private Task task;
+        private void RunRefreshTask(Task task1=null)
+        {
+            task = DoRefreshTask().ContinueWith(RunRefreshTask);
+        }
+        private async Task DoRefreshTask()
         {
             await Servers.RefreshAsync().CatchWithMessageAsync();
             Thread.Sleep(Settings.Default.RefreshPeriod);

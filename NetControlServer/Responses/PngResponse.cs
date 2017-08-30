@@ -1,4 +1,5 @@
 ﻿using NetControlCommon;
+using NetControlCommon.Interfaces;
 
 namespace NetControlServer.Responses
 {

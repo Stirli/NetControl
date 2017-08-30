@@ -6,7 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using NetControlCommon;
-using NetControlCommon.Annotations;
+using NetControlCommon.Properties;
+using NetControlCommon.Utils;
 
 namespace NetControlClient
 {

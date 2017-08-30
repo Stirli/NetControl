@@ -7,14 +7,16 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using NetControlClient.Annotations;
 using NetControlClient.Properties;
+using NetControlClient.Utils;
 using NetControlCommon;
+using NetControlCommon.Utils;
 using Size = System.Windows.Size;
 
 
@@ -37,25 +39,17 @@ namespace NetControlClient
 
         public async Task UpdateBackBuffer()
         {
-            WebRequest req2 = WebRequest.CreateHttp($"http://{Host}:8080/api/prtsc?size={Settings.Default.ScreenshotSize}");
-
-            BitmapFrame frame;
-            using (var resp2 = await req2.GetResponseAsync())
-            {
-                var stream = resp2.GetResponseStream();
-                frame = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default).Frames.First();
-            }
-            int stride = frame.PixelWidth * frame.Format.BitsPerPixel / 8;
-            int offset = 0;
-            byte[] imageArray = new byte[frame.PixelHeight * stride];
-            frame.CopyPixels(imageArray, stride, offset);
-            App.InMainDispatcher(() =>
-            {
-                wbitmap.Lock();
-                wbitmap.WritePixels(new Int32Rect(0, 0, frame.PixelWidth, frame.PixelHeight), imageArray, stride, 0);
-                wbitmap.Unlock();
-            });
+            WebRequest req = WebRequest.CreateHttp($"http://{Host}:8080/api/prtsc?size={Settings.Default.ScreenshotSize}");
+            var resp = await req.GetResponseAsync();
+            var stream = resp.GetResponseStream();
+            int stride;
+            byte[] imageArray;
+            MakeBitmapSource.FromStream(stream, out imageArray, out stride);
+            App.InMainDispatcher(() => { wbitmap.WritePixels(imageArray, stride); });
         }
+
+
+
         public async Task Refresh()
         {
             IsOnline = await CheckOnline();

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NetControlClient
+namespace NetControlClient.MVVM
 {
     /// <summary>
     /// Класс ViewModelCommand – реализующий интерфейс ICommand, вызывает нужную функцию.

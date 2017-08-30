@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using NetControlCommon;
+using NetControlCommon.Interfaces;
+using NetControlCommon.StandartResponses;
 using NetControlServer.Classes;
 using NetControlServer.Responses;
 

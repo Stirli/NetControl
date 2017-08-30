@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using NetControlCommon.Annotations;
+using NetControlCommon.Properties;
 
-namespace NetControlCommon
+namespace NetControlCommon.Utils
 {
     public static class Runner
     {

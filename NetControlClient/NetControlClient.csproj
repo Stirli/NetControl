@@ -58,22 +58,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AsynchronousCommand.cs" />
-    <Compile Include="MakeBitmapSource.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="MVVM\AsynchronousCommand.cs" />
+    <Compile Include="Utils\MakeBitmapSource.cs" />
+    <Compile Include="MVVM\Command.cs" />
     <Compile Include="Properties\RequestSettings.cs" />
-    <Compile Include="MainViewModel.cs" />
-    <Compile Include="ObservableCollectionHelpers.cs" />
+    <Compile Include="Windows\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="Utils\ObservableCollectionHelpers.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RequestHelpers.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="ViewModel.cs" />
-    <Page Include="MainWindow.xaml">
+    <Compile Include="MVVM\ViewModel.cs" />
+    <Page Include="Windows\Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,7 +80,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Server.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>

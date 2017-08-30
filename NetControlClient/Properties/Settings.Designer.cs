@@ -39,7 +39,7 @@ namespace NetControlClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int RefreshPeriod {
             get {
                 return ((int)(this["RefreshPeriod"]));
