@@ -4,12 +4,24 @@ using System.Windows.Input;
 namespace NetControlClient.MVVM
 {
     /// <summary>
-    /// Класс ViewModelCommand – реализующий интерфейс ICommand, вызывает нужную функцию.
+    ///     Класс ViewModelCommand – реализующий интерфейс ICommand, вызывает нужную функцию.
     /// </summary>
     public class Command : ICommand
     {
         /// <summary>
-        /// Инициализация нового экземпляра класса без параметров <see cref="Command"/>.
+        ///     Действие(или параметризованное действие) которое вызывается при активации команды.
+        /// </summary>
+        protected Action action;
+
+        /// <summary>
+        ///     Будевое значение, отвечающие за возможность выполнения команды.
+        /// </summary>
+        private bool canExecute;
+
+        protected Action<object> parameterizedAction;
+
+        /// <summary>
+        ///     Инициализация нового экземпляра класса без параметров <see cref="Command" />.
         /// </summary>
         /// <param name="action">Действие.</param>
         /// <param name="canExecute">Если установлено в<c>true</c> [can execute] (выполнение разрешено).</param>
@@ -21,7 +33,7 @@ namespace NetControlClient.MVVM
         }
 
         /// <summary>
-        /// Инициализация нового экземпляра класса с параметрами <see cref="Command"/> class.
+        ///     Инициализация нового экземпляра класса с параметрами <see cref="Command" /> class.
         /// </summary>
         /// <param name="parameterizedAction">Параметризированное действие.</param>
         /// <param name="canExecute"> Если установлено в <c>true</c> [can execute](выполнение разрешено).</param>
@@ -33,19 +45,7 @@ namespace NetControlClient.MVVM
         }
 
         /// <summary>
-        /// Действие(или параметризованное действие) которое вызывается при активации команды.
-        /// </summary>
-        protected Action action = null;
-
-        protected Action<object> parameterizedAction = null;
-
-        /// <summary>
-        /// Будевое значение, отвечающие за возможность выполнения команды.
-        /// </summary>
-        private bool canExecute = false;
-
-        /// <summary>
-        /// Установка /  получение значения, отвечающего за возможность выполнения команды
+        ///     Установка /  получение значения, отвечающего за возможность выполнения команды
         /// </summary>
         /// <value>
         ///     <c>true</c> если выполнение разрешено; если запрещено - <c>false</c>.
@@ -62,13 +62,15 @@ namespace NetControlClient.MVVM
         }
 
         /// <summary>
-        /// Определяем метод, определющий, что выполнение команды допускается в текущем состоянии
+        ///     Определяем метод, определющий, что выполнение команды допускается в текущем состоянии
         /// </summary>
-        /// <param name="parameter">Этот параметр используется командой.
-        ///  Если команда вызывается без использования параметра,
-        ///  то этот объект может быть установлен в  null.</param>
+        /// <param name="parameter">
+        ///     Этот параметр используется командой.
+        ///     Если команда вызывается без использования параметра,
+        ///     то этот объект может быть установлен в  null.
+        /// </param>
         /// <returns>
-        /// > если выполнение команды разрешено; если запрещено - false.
+        ///     > если выполнение команды разрешено; если запрещено - false.
         /// </returns>
         bool ICommand.CanExecute(object parameter)
         {
@@ -76,44 +78,45 @@ namespace NetControlClient.MVVM
         }
 
         /// <summary>
-        /// Задание метода, который будет вызван при активации команды.
+        ///     Задание метода, который будет вызван при активации команды.
         /// </summary>
-        /// <param name="parameter"> Этот параметр используется командой.
-        ///  Если команда вызывается без использования параметра,
-        ///  то этот объект может быть установлен в  null.</param>
+        /// <param name="parameter">
+        ///     Этот параметр используется командой.
+        ///     Если команда вызывается без использования параметра,
+        ///     то этот объект может быть установлен в  null.
+        /// </param>
         void ICommand.Execute(object parameter)
         {
-            this.DoExecute(parameter);
-
+            DoExecute(parameter);
         }
 
         /// <summary>
-        ///  Вызывается, когда меняется возможность выполнения команды
+        ///     Вызывается, когда меняется возможность выполнения команды
         /// </summary>
         public event EventHandler CanExecuteChanged;
 
         /// <summary>
-        /// Вызывается во время выполнения команды
+        ///     Вызывается во время выполнения команды
         /// </summary>
         public event CancelCommandEventHandler Executing;
 
         /// <summary>
-        /// Вызывается, когда команды выполнена
+        ///     Вызывается, когда команды выполнена
         /// </summary>
         public event CommandEventHandler Executed;
 
         protected void InvokeAction(object param)
         {
-            Action theAction = action;
-            Action<object> theParameterizedAction = parameterizedAction;
+            var theAction = action;
+            var theParameterizedAction = parameterizedAction;
             if (theAction != null)
                 theAction();
             else theParameterizedAction?.Invoke(param);
         }
-        
+
         protected void InvokeExecuted(CommandEventArgs args)
         {
-            CommandEventHandler executed = Executed;
+            var executed = Executed;
             //  Вызвать все события
             executed?.Invoke(this, args);
         }
@@ -124,13 +127,13 @@ namespace NetControlClient.MVVM
         }
 
         /// <summary>
-        /// Выполнение команды
+        ///     Выполнение команды
         /// </summary>
         /// <param name="param">The param.</param>
         public virtual void DoExecute(object param)
         {
             //  Вызывает выполнении команды с возможностью отмены
-            CancelCommandEventArgs args =
+            var args =
                 new CancelCommandEventArgs {Parameter = param, Cancel = false};
             InvokeExecuting(args);
 
@@ -150,12 +153,12 @@ namespace NetControlClient.MVVM
 
     public delegate void CancelCommandEventHandler(object o, CancelCommandEventArgs args);
 
-    public class CommandEventArgs:EventArgs
+    public class CommandEventArgs : EventArgs
     {
         public object Parameter { get; set; }
     }
 
-    public class CancelCommandEventArgs: EventArgs
+    public class CancelCommandEventArgs : EventArgs
     {
         public object Parameter { get; set; }
         public bool Cancel { get; set; }

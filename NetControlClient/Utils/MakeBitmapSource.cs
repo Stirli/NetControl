@@ -17,8 +17,8 @@ namespace NetControlClient.Utils
         public static byte[] CopyPixels(this BitmapSource frame, out int stride)
         {
             stride = frame.PixelWidth * frame.Format.BitsPerPixel / 8;
-            int offset = 0;
-            byte[] imageArray = new byte[frame.PixelHeight * stride];
+            var offset = 0;
+            var imageArray = new byte[frame.PixelHeight * stride];
             frame.CopyPixels(imageArray, stride, offset);
             return imageArray;
         }
@@ -26,13 +26,14 @@ namespace NetControlClient.Utils
         public static BitmapSource FromStream(Stream stream)
         {
             BitmapSource frame =
-                new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default).Frames.Last();
+                new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default).Frames
+                    .Last();
             return frame;
         }
 
         public static void FromStream(Stream stream, out byte[] imageArray, out int stride)
         {
-            var frame = MakeBitmapSource.FromStream(stream);
+            var frame = FromStream(stream);
             imageArray = frame.CopyPixels(out stride);
         }
     }

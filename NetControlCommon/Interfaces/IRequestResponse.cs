@@ -2,7 +2,7 @@
 {
     public interface IRequestResponse
     {
-        byte[] GetBytes();
         string ContentType { get; }
+        byte[] GetBytes();
     }
 }

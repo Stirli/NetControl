@@ -1,12 +1,11 @@
 ﻿using System.Text;
-using NetControlCommon;
 using NetControlCommon.Interfaces;
 
 namespace NetControlServer.Responses
 {
-    public class StringResponse:IRequestResponse
+    public class StringResponse : IRequestResponse
     {
-        private string str;
+        private readonly string str;
 
         public StringResponse(string str)
         {

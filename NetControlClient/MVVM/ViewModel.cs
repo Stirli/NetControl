@@ -4,7 +4,7 @@ using NetControlClient.Properties;
 
 namespace NetControlClient.MVVM
 {
-    class ViewModel:INotifyPropertyChanged
+    internal class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

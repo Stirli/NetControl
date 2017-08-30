@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ServerJobs.cs" />
+    <Compile Include="Classes\ServerPrivate.cs" />
     <Compile Include="MVVM\AsynchronousCommand.cs" />
     <Compile Include="Utils\MakeBitmapSource.cs" />
     <Compile Include="MVVM\Command.cs" />
@@ -79,7 +81,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Server.cs" />
+    <Compile Include="Classes\Server.cs" />
     <Compile Include="Windows\Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

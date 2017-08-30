@@ -13,20 +13,17 @@ namespace NetControlCommon
 {
     public class HttpServer
     {
-        private Action<string, string> log;
-        public event EventHandler Stopped;
         private readonly W<bool> _cancelationPending = false;
-        private bool _isListening;
-
-        public bool IsListening
-        {
-            get { return _isListening; }
-        }
+        private readonly Action<string, string> log;
 
         public HttpServer(Action<string, string> log)
         {
             this.log = log;
         }
+
+        public bool IsListening { get; private set; }
+
+        public event EventHandler Stopped;
 
         private static void IgnoreFailure(Action a)
         {
@@ -36,7 +33,7 @@ namespace NetControlCommon
             }
             // ReSharper disable EmptyGeneralCatchClause
             catch
-            // ReSharper restore EmptyGeneralCatchClause
+                // ReSharper restore EmptyGeneralCatchClause
             {
             }
         }
@@ -49,7 +46,7 @@ namespace NetControlCommon
             }
             // ReSharper disable EmptyGeneralCatchClause
             catch (Exception ex)
-            // ReSharper restore EmptyGeneralCatchClause
+                // ReSharper restore EmptyGeneralCatchClause
             {
                 log(ex.Message + "\n" + description, "Произошла ошибка");
             }
@@ -67,9 +64,7 @@ namespace NetControlCommon
                     try
                     {
                         foreach (var prefix in prefixes)
-                        {
                             hl.Prefixes.Add(prefix);
-                        }
                         hl.Start();
                     }
                     catch (Exception ex)
@@ -78,25 +73,19 @@ namespace NetControlCommon
                         Environment.Exit(-1);
                     }
                     for (var i = 0; i < tasks.Length; ++i)
-                    {
                         StartTask(tasks, i, cts.Token, hl);
-                    }
-                    _isListening = true;
+                    IsListening = true;
                     await Task.Factory.StartNew(o =>
                     {
                         while (!_cancelationPending)
-                        {
                             Thread.Sleep(500);
-                        }
                     }, _cancelationPending, TaskCreationOptions.LongRunning);
 
                     cts.Cancel();
 
-                    _isListening = false;
+                    IsListening = false;
                     foreach (var t in tasks)
-                    {
                         t.Wait(TimeSpan.FromSeconds(15));
-                    }
                     hl.Stop();
                 }
             }
@@ -109,10 +98,11 @@ namespace NetControlCommon
                     Stopped?.Invoke(this, new EventArgs());
                 }
                 else
+                {
                     log(ex.Message, "Ошибка");
+                }
             }
         }
-
 
 
         private void StartTask(Task[] tasks, int i, CancellationToken token, HttpListener hl)
@@ -126,7 +116,7 @@ namespace NetControlCommon
 
         private void ProcessRequest(Task<HttpListenerContext> task)
         {
-            ControllerFactory cf = new ControllerFactory();
+            var cf = new ControllerFactory();
             DefCatchFailure(() =>
                 {
                     if (!task.IsCompleted)
@@ -135,28 +125,27 @@ namespace NetControlCommon
                     try
                     {
                         var addr = ctx.Request.Url.AbsolutePath.ToLowerInvariant()
-                                .Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
+                                .Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries)
                             ;
                         if (addr.First().Equals("service"))
-                        {
-                            ProcessService(ctx,addr);
-                        }
+                            ProcessService(ctx, addr);
                         var controller = cf.GetController(addr.First());
                         IRequestResponse resp = null;
                         if (ctx.Request.HttpMethod.Equals("GET"))
                         {
                             foreach (var methodInfo in controller.GetType().GetMethods())
-                            {
-                                if (methodInfo.Name.ToLowerInvariant() == addr.Last()) // Если это метод с нужным названием
-                                    if (methodInfo.GetParameters().Length == ctx.Request.QueryString.Count && ctx.Request.QueryString.Count == 0   // Если у метода 0 параметров
-                                    || methodInfo.GetParameters().Select(p => p.Name).Intersect(ctx.Request.QueryString.AllKeys).Any()) // Или они совпадают
+                                if (methodInfo.Name.ToLowerInvariant() == addr.Last()
+                                ) // Если это метод с нужным названием
+                                    if (methodInfo.GetParameters().Length == ctx.Request.QueryString.Count &&
+                                        ctx.Request.QueryString.Count == 0 // Если у метода 0 параметров
+                                        || methodInfo.GetParameters().Select(p => p.Name)
+                                            .Intersect(ctx.Request.QueryString.AllKeys).Any()) // Или они совпадают
                                     {
-                                        resp = methodInfo.Invoke(controller, ctx.Request.QueryString.AllKeys.Select(k => GetReqValue(ctx.Request.Url, k)) //выполняем этот метод
-                                          .ToArray()) as IRequestResponse;
+                                        resp = methodInfo.Invoke(controller, ctx.Request.QueryString.AllKeys
+                                            .Select(k => GetReqValue(ctx.Request.Url, k)) //выполняем этот метод
+                                            .ToArray()) as IRequestResponse;
                                         break;
                                     }
-
-                            }
                             if (resp == null) resp = new NotFoundResponse();
                             var buffer = resp.GetBytes();
                             ctx.Response.ContentType = resp.ContentType;
@@ -173,18 +162,16 @@ namespace NetControlCommon
                     {
                         ctx.Response.Close();
                     }
-
                 }
-            , "Обработка запроса");
+                , "Обработка запроса");
         }
 
         private void ProcessService(HttpListenerContext ctx, string[] addr)
         {
             if (addr.Last().Equals("terminate"))
-            {
                 Stop();
-            }
         }
+
         private object GetReqValue(Uri uri, string key)
         {
             return uri.GetComponents(UriComponents.Query, UriFormat.SafeUnescaped).Split('&')

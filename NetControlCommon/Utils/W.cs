@@ -1,7 +1,7 @@
 ﻿namespace NetControlCommon.Utils
 {
     /// <summary>
-    /// Wrap
+    ///     Wrap
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class W<T>
@@ -10,6 +10,7 @@
         {
             Value = v;
         }
+
         public T Value { get; set; }
 
         public static implicit operator T(W<T> w)

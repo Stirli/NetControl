@@ -6,7 +6,9 @@ namespace NetControlCommon.Utils
 {
     public static class Runner
     {
-        public static bool CatchWithMessage([NotNull]this Action action)
+        public static Action<string> DefaultCatch;
+
+        public static bool CatchWithMessage([NotNull] this Action action)
         {
             try
             {
@@ -20,9 +22,7 @@ namespace NetControlCommon.Utils
             }
         }
 
-        public static Action<string> DefaultCatch;
-
-        public static bool CatchWithMessage<T>([NotNull]this Action<T> action, T param)
+        public static bool CatchWithMessage<T>([NotNull] this Action<T> action, T param)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace NetControlCommon.Utils
             }
         }
 
-        public static async Task<T> CatchWithMessageAsync<T>([NotNull]this Task<T> action)
+        public static async Task<T> CatchWithMessageAsync<T>([NotNull] this Task<T> action)
         {
             try
             {
@@ -60,17 +60,17 @@ namespace NetControlCommon.Utils
                 return default(T);
             }
         }
-        public static async Task<T> CatchAsync<T>([NotNull]this Task<T> action)
+
+        public static async Task<T> CatchAsync<T>([NotNull] this Task<T> action)
         {
             try
             {
                 return await action;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return default(T);
             }
         }
-
     }
 }

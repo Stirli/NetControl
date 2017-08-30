@@ -5,32 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetControlClient"
         xmlns:viewModels="clr-namespace:NetControlClient.Windows.Main.ViewModels"
+        xmlns:classes="clr-namespace:NetControlClient.Classes"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.DataContext>
-        <viewModels:MainViewModel/>
+        <viewModels:MainViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <Grid>
-        <ListBox x:Name="listBox"  Margin="10,10,0,10" ItemsSource="{Binding Servers}" SelectedItem="{Binding SelectedServer}" HorizontalAlignment="Left" Width="260">
+        <ListBox x:Name="listBox" Margin="10,10,0,10" ItemsSource="{Binding Servers}"
+                 SelectedItem="{Binding SelectedServer}" HorizontalAlignment="Left" Width="260">
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="local:Server">
+                <DataTemplate DataType="classes:Server">
                     <DockPanel>
-                        <TextBlock Background="Red" x:Name="clientNameText" Text="{Binding Host}" VerticalAlignment="Center"/>
+                        <TextBlock Background="Red" x:Name="clientNameText" Text="{Binding Host}"
+                                   VerticalAlignment="Center" />
                     </DockPanel>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsOnline}" Value="True">
-                            <Setter TargetName="clientNameText" Property="Background" Value="ForestGreen"/>
+                            <Setter TargetName="clientNameText" Property="Background" Value="ForestGreen" />
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBlock Text="{Binding RefreshState, StringFormat={}Обновление ({0})}" Height="27" TextAlignment="Center"
-                   VerticalAlignment="Bottom" Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter},
-            Path=Refreshing, Mode=OneWay}"/>
-        <Image Source="{Binding SelectedServer.Screenshot, Mode=OneWay}" Margin="275,10,10,10"/>
+                   VerticalAlignment="Bottom"
+                   Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter},
+            Path=Refreshing, Mode=OneWay}" />
+        <Image Source="{Binding SelectedServer.Screenshot, Mode=OneWay}" Margin="275,10,10,10" />
     </Grid>
 </Window>

@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using NetControlCommon.Interfaces;
 
 namespace NetControlCommon
 {
     public class ControllerFactory
     {
-        IEnumerable<Type> controllers;
+        private readonly IEnumerable<Type> controllers;
+
         public ControllerFactory()
         {
-            
             //AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName());
-            controllers = AppDomain.CurrentDomain.GetAssemblies().Where(ass=>ass.FullName.Contains("NetControl"))
-                .SelectMany(ass =>ass.GetTypes().Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Controller")));
+            controllers = AppDomain.CurrentDomain.GetAssemblies().Where(ass => ass.FullName.Contains("NetControl"))
+                .SelectMany(ass => ass.GetTypes()
+                    .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Controller")));
         }
 
         public IController GetController(string method)

@@ -1,9 +1,8 @@
-﻿using NetControlCommon;
-using NetControlCommon.Interfaces;
+﻿using NetControlCommon.Interfaces;
 
 namespace NetControlServer.Responses
 {
-    class PngResponse:IRequestResponse
+    internal class PngResponse : IRequestResponse
     {
         private readonly byte[] _pngBytes;
 
@@ -13,6 +12,7 @@ namespace NetControlServer.Responses
         }
 
         public string ContentType => "image/png";
+
         public byte[] GetBytes()
         {
             return _pngBytes;

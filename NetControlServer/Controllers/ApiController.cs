@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using NetControlCommon;
-using NetControlCommon.Interfaces;
+﻿using NetControlCommon.Interfaces;
 using NetControlCommon.StandartResponses;
 using NetControlServer.Classes;
 using NetControlServer.Responses;
@@ -19,14 +16,15 @@ namespace NetControlServer.Controllers
         {
             return new PngResponse(ScreenCapturer.Take());
         }
+
         public IRequestResponse PrtSc(string size)
         {
             int width;
             int height;
             var arr = size.Split(',');
-            if (arr.Length!=2) return new NotFoundResponse();
-            Int32.TryParse(arr[0], out width);
-            Int32.TryParse(arr[1], out height);
+            if (arr.Length != 2) return new NotFoundResponse();
+            int.TryParse(arr[0], out width);
+            int.TryParse(arr[1], out height);
             return new PngResponse(ScreenCapturer.Take(width, height));
         }
     }

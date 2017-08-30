@@ -1,29 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
-using NetControlCommon;
 using NetControlCommon.Properties;
 using NetControlCommon.Utils;
 
 namespace NetControlClient
 {
     /// <summary>
-    /// Логика взаимодействия для App.xaml
+    ///     Логика взаимодействия для App.xaml
     /// </summary>
     public partial class App : Application
     {
         static App()
         {
-            Runner.DefaultCatch = s => MessageBox.Show(s);
+            Runner.DefaultCatch = s =>
+            {
+                var e = 5;
+                MessageBox.Show(s, Assembly.GetEntryAssembly().FullName);
+            };
         }
 
         public static void InMainDispatcher([NotNull] Action action)
         {
-            Application.Current.Dispatcher.BeginInvoke(action);
+            Current.Dispatcher.BeginInvoke(action);
         }
     }
 }
