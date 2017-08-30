@@ -22,10 +22,10 @@ namespace NetControlServer
         HttpServer server;
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-
+            Runner.DefaultCatch = s => MessageBox.Show(s);
             server = new HttpServer((st, cap) => MessageBox.Show(st, cap));
             server.Stopped += ServerStopped;
-            server.StartAsync(Settings.Default.Prefixes.Cast<string>(), 4);
+            server.StartAsync(Settings.Default.Prefixes.Cast<string>()).CatchWithMessageAsync();
             MessageBox.Show("Server started");
         }
    

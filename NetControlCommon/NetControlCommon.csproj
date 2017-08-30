@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Runner.cs" />
     <Compile Include="TaskQueue.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="HttpServer.cs" />

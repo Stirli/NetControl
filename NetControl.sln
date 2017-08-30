@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetControlClient", "NetCont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetControlServer", "NetControlServer\NetControlServer.csproj", "{8DFD14B8-6842-467F-AFAF-B68296F546FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoozyPainter", "WoozyPainter\WoozyPainter.csproj", "{4E787CD8-B80D-4C2E-ACA4-8C31403570BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{8DFD14B8-6842-467F-AFAF-B68296F546FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DFD14B8-6842-467F-AFAF-B68296F546FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DFD14B8-6842-467F-AFAF-B68296F546FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E787CD8-B80D-4C2E-ACA4-8C31403570BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E787CD8-B80D-4C2E-ACA4-8C31403570BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E787CD8-B80D-4C2E-ACA4-8C31403570BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E787CD8-B80D-4C2E-ACA4-8C31403570BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
