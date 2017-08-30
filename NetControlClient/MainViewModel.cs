@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using NetControlClient.Properties;
+using NetControlCommon;
 
 namespace NetControlClient
 {
@@ -40,28 +41,18 @@ namespace NetControlClient
 
         public MainViewModel()
         {
-            const string testMessage = "EchoMessageЭхоСообщение202";
             Servers = new ObservableCollection<Server>();
             foreach (var client in Settings.Default.Servers)
             {
-                var req = WebRequest.CreateHttp($"http://{client}:8080/test/echo?mes={testMessage}");
-                Runner.IgnoreErr(() =>
-                {
-                    var resp = req.GetResponse();
-                    if (req.HaveResponse)
-                    {
-                        var str = new StreamReader(resp.GetResponseStream()).ReadToEnd();
-                        if (str.Equals(testMessage))
-                        {
-                            Servers.Add_s(new Server(client));
-                        }
-                    }
-                });
-
+                Servers.Add_s(new Server(client));
             }
-            _timer = new Timer(TimerWork, null, 5000, Properties.Settings.Default.RefreshPeriod);
+            task = TimerWork().ContinueWith(ContinueTask);
         }
 
+        private void ContinueTask(Task task1)
+        {
+            task = TimerWork().ContinueWith(ContinueTask);
+        }
         public Server SelectedServer
         {
             get => _selectedServer;
@@ -73,12 +64,13 @@ namespace NetControlClient
             }
         }
 
-        Timer _timer;
+        private Task task;
         private Server _selectedServer;
 
-        private void TimerWork(object state)
+        private async Task TimerWork()
         {
-            Runner.InMainDispatcher(() => Servers.Refresh());
+            await Servers.RefreshAsync().CatchWithMessageAsync();
+            Thread.Sleep(Settings.Default.RefreshPeriod);
         }
     }
 }

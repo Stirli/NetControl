@@ -21,15 +21,12 @@ namespace NetControlClient
         {
             collection.GetDispatcher().Invoke(() => collection.Add(item));
         }
-        public static void Refresh(this ObservableCollection<Server> collection)
+        public static async Task RefreshAsync(this ObservableCollection<Server> collection)
         {
-            collection.GetDispatcher().Invoke(async () =>
+            foreach (var server in collection)
             {
-                foreach (var server in collection)
-                {
-                    await server.Refresh();
-                }
-            });
+                await server.Refresh();
+            }
         }
     }
 }

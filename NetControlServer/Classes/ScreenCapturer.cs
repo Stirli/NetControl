@@ -1,41 +1,51 @@
 ﻿using System;
+using System.Data.OracleClient;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Size = System.Windows.Size;
+using Size = System.Drawing.Size;
 
 namespace NetControlServer.Classes
 {
     public static class ScreenCapturer
     {
-        public static byte[] Take(Size size = default(Size))
+        static readonly int left = Screen.AllScreens.Min(screen => screen.Bounds.X);
+        static readonly int top = Screen.AllScreens.Min(screen => screen.Bounds.Y);
+        static readonly int right = Screen.AllScreens.Max(screen => screen.Bounds.X + screen.Bounds.Width);
+        static readonly int bottom = Screen.AllScreens.Max(screen => screen.Bounds.Y + screen.Bounds.Height);
+        static readonly int width = right - left;
+        static readonly int height = bottom - top;
+        static Bitmap original = new Bitmap(width, height);
+        private static Graphics originalGraphics = Graphics.FromImage(original);
+
+        public static byte[] Take()
         {
-            var left = Screen.AllScreens.Min(screen => screen.Bounds.X);
-            var top = Screen.AllScreens.Min(screen => screen.Bounds.Y);
-            var right = Screen.AllScreens.Max(screen => screen.Bounds.X + screen.Bounds.Width);
-            var bottom = Screen.AllScreens.Max(screen => screen.Bounds.Y + screen.Bounds.Height);
-            var width = right - left;
-            var height = bottom - top;
-
-            using (var screenBmp = new Bitmap((int)(size != default(Size) ? size.Width : width), (int)(size != default(Size) ? size.Height : height), PixelFormat.Format32bppArgb))
+            return Take(width, height);
+        }
+        public static byte[] Take(int newWidth, int newHeight)
+        {
+            using (Bitmap resultBmp = new Bitmap(newWidth, newHeight, PixelFormat.Format32bppArgb))
             {
-                using (var bmpGraphics = Graphics.FromImage(screenBmp))
+                using (var graphics = Graphics.FromImage(resultBmp))
                 {
-                    if (size != default(Size))
+                    graphics.CompositingQuality = CompositingQuality.HighSpeed;
+                    graphics.InterpolationMode = InterpolationMode.Low;
+                    graphics.SmoothingMode = SmoothingMode.None;
+                    lock (originalGraphics)
                     {
-                        bmpGraphics.ScaleTransform((float)(size.Width / width), (float)(size.Height / height));
+                        originalGraphics.CopyFromScreen(left, top, 0, 0, new Size(width, height));
+                        graphics.DrawImage(original, 0, 0, newWidth, newHeight);
+                        Byte[] resultImageArray;
+                        using (MemoryStream outputStream = new MemoryStream())
+                        {
+                            resultBmp.Save(outputStream, ImageFormat.Png);
+                            resultImageArray = outputStream.ToArray();
+                        }
+                        return resultImageArray;
                     }
-                    bmpGraphics.CopyFromScreen(left, top, 0, 0, new System.Drawing.Size(width, height));
-                    Byte[] imageArray;
-                    using (MemoryStream outputStream = new MemoryStream())
-                    {
-                        screenBmp.Save(outputStream, ImageFormat.Png);
-                        imageArray = outputStream.ToArray();
-                    }
-
-                    return imageArray;
                 }
             }
         }

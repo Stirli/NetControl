@@ -62,7 +62,6 @@
     <Compile Include="MakeBitmapSource.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Properties\RequestSettings.cs" />
-    <Compile Include="Runner.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ObservableCollectionHelpers.cs" />
     <Compile Include="Properties\Annotations.cs" />

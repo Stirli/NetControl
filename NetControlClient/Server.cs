@@ -10,9 +10,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using NetControlClient.Annotations;
 using NetControlClient.Properties;
+using NetControlCommon;
 using Size = System.Windows.Size;
 
 
@@ -24,7 +26,6 @@ namespace NetControlClient
         {
             Host = host;
             var size = Size.Parse(Settings.Default.ScreenshotSize);
-            pixelsCount = (int)(size.Width * size.Height);
             wbitmap = new WriteableBitmap((int)size.Width, (int)size.Height, 96, 96, System.Windows.Media.PixelFormats.Pbgra32, null);
             Refresh();
         }
@@ -34,59 +35,57 @@ namespace NetControlClient
 
         public bool IsOnline { get; private set; }
 
-        public void UpdateBackBuffer()
+        public async Task UpdateBackBuffer()
         {
-            Runner.IgnoreErr(() =>
+            WebRequest req2 = WebRequest.CreateHttp($"http://{Host}:8080/api/prtsc?size={Settings.Default.ScreenshotSize}");
+
+            BitmapFrame frame;
+            using (var resp2 = await req2.GetResponseAsync())
             {
-                WebRequest req2 = WebRequest.CreateHttp($"http://{Host}:8080/api/prtsc?size={Settings.Default.ScreenshotSize}");
-
-                var resp2 = req2.GetResponse();
                 var stream = resp2.GetResponseStream();
-
-                var bmpi = Bitmap.FromStream(stream);
-                Byte[] imageArray;
-
-
-                using (MemoryStream outputStream = new MemoryStream())
-                {
-                    bmpi.Save(outputStream, ImageFormat.Png);
-                    imageArray = outputStream.ToArray();
-                }
-                wbitmap.FromByteArray(imageArray);
-                //List<byte> bytes = new List<byte>();
-                //while (true)
-                //{
-                //    var readByte = stream.ReadByte();
-                //    if (readByte == -1) break;
-                //    bytes.Add((byte)readByte);
-                //}
-                //wbitmap.FromByteArray(bytes.ToArray());
+                frame = new PngBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default).Frames.First();
+            }
+            int stride = frame.PixelWidth * frame.Format.BitsPerPixel / 8;
+            int offset = 0;
+            byte[] imageArray = new byte[frame.PixelHeight * stride];
+            frame.CopyPixels(imageArray, stride, offset);
+            App.InMainDispatcher(() =>
+            {
+                wbitmap.Lock();
+                wbitmap.WritePixels(new Int32Rect(0, 0, frame.PixelWidth, frame.PixelHeight), imageArray, stride, 0);
+                wbitmap.Unlock();
             });
         }
         public async Task Refresh()
         {
+            IsOnline = await CheckOnline();
+            OnPropertyChanged(nameof(IsOnline));
+            if (IsOnline)
+                await UpdateBackBuffer();
+        }
+
+        private async Task<bool> CheckOnline()
+        {
             WebRequest req = WebRequest.CreateHttp($"http://{Host}:8080/test/echo?mes=message");
+            req.Timeout = 1000;
             StringBuilder str = new StringBuilder();
-            var resp = await req.GetResponseAsync().IgnoreErrAsync();
+            var resp = await req.GetResponseAsync().CatchAsync();
+            if (resp == null) return false;
             var responseStream = resp?.GetResponseStream();
             if (responseStream != null)
                 str.Append(new StreamReader(responseStream).ReadToEnd());
 
-            Runner.InMainDispatcher(() => IsOnline = str.ToString().Equals("message"));
-            if (resp == null) return;
-            OnPropertyChanged(nameof(IsOnline));
-
-            UpdateBackBuffer();
+            return str.ToString().Equals("message");
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            App.InMainDispatcher(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
         }
 
         private WriteableBitmap wbitmap;
-        private int pixelsCount;
     }
 }

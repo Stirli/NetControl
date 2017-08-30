@@ -9,7 +9,7 @@
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="RefreshPeriod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1000</Value>
+      <Value Profile="(Default)">1500</Value>
     </Setting>
     <Setting Name="ScreenshotSize" Type="System.String" Scope="User">
       <Value Profile="(Default)">1280,720</Value>
