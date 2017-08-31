@@ -1,0 +1,10 @@
+﻿<Window x:Class="NetControlClient.Windows.ShowImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetControlClient.Windows"
+        mc:Ignorable="d"
+        Title="{Binding Host}" Height="300" Width="300">
+    <Image Source="{Binding Screenshot}" Stretch="Uniform"/>
+</Window>

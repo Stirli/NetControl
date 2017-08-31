@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Size.cs" />
     <Compile Include="Responses\StringResponse.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Responses\PngResponse.cs" />

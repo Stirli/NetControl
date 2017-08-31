@@ -59,7 +59,7 @@ namespace NetControlClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int RefreshPeriod {
             get {
                 return ((int)(this["RefreshPeriod"]));
@@ -71,7 +71,7 @@ namespace NetControlClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1280,720")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1920,1080")]
         public string ScreenshotSize {
             get {
                 return ((string)(this["ScreenshotSize"]));

@@ -1,4 +1,7 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using NetControlClient.Classes;
 
 namespace NetControlClient.Windows.Main
 {
@@ -10,6 +13,15 @@ namespace NetControlClient.Windows.Main
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Image_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var elem = sender as FrameworkElement;
+            var serv = elem.DataContext as Server;
+            var win = new ShowImageWindow();
+            win.DataContext = serv;
+            win.Show();
         }
     }
 }

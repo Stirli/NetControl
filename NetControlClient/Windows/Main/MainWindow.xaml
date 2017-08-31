@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:NetControlClient.Windows.Main.ViewModels"
         xmlns:classes="clr-namespace:NetControlClient.Classes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="747.458">
     <Window.DataContext>
         <viewModels:MainViewModel />
     </Window.DataContext>
@@ -15,12 +15,18 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <Grid>
-        <ListBox x:Name="listBox" Margin="10,10,0,10" ItemsSource="{Binding Servers}"
-                 SelectedItem="{Binding SelectedServer}" HorizontalAlignment="Left" Width="260">
-            <ListBox.ItemTemplate>
+        <ListView x:Name="listBox" Margin="10" ItemsSource="{Binding Servers}" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 SelectedItem="{Binding SelectedServer}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" ></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
                 <DataTemplate DataType="classes:Server">
                     <DockPanel>
-                        <TextBlock Background="Red" x:Name="clientNameText" Text="{Binding Host}"
+                        <Image Source="{Binding Screenshot}" Width="120" Stretch="Uniform" PreviewMouseUp="Image_OnPreviewMouseUp"/>
+                        <TextBlock Padding="8" Background="Red" x:Name="clientNameText" Text="{Binding Host}"
                                    VerticalAlignment="Center" />
                     </DockPanel>
                     <DataTemplate.Triggers>
@@ -29,12 +35,7 @@
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <TextBlock Text="{Binding RefreshState, StringFormat={}Обновление ({0})}" Height="27" TextAlignment="Center"
-                   VerticalAlignment="Bottom"
-                   Visibility="{Binding Converter={StaticResource BooleanToVisibilityConverter},
-            Path=Refreshing, Mode=OneWay}" />
-        <Image Source="{Binding SelectedServer.Screenshot, Mode=OneWay}" Margin="275,10,10,10" />
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

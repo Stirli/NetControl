@@ -1,15 +1,12 @@
-﻿using System.ComponentModel;
-using System.IO;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿
+
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using NetControlClient.Properties;
-using NetControlClient.Utils;
-using NetControlCommon.Utils;
+using NetControlServer.Classes;
 
 namespace NetControlClient.Classes
 {
@@ -18,8 +15,10 @@ namespace NetControlClient.Classes
         public Server(string host)
         {
             Host = host;
-            var size = Size.Parse(Settings.Default.ScreenshotSize);
-            Screenshot = new WriteableBitmap((int) size.Width, (int) size.Height, 96, 96, PixelFormats.Pbgra32, null);
+            Size.TryParse(Settings.Default.ScreenshotSize,out var size);
+            var pixelWidth = !size.Equals(default(Size))? size.w : 1920;
+            var pixelHeight = !size.Equals(default(Size)) ? size.h : 1080;
+            Screenshot = new WriteableBitmap(pixelWidth, pixelHeight, 96, 96, PixelFormats.Pbgra32, null);
             Refresh();
         }
 
