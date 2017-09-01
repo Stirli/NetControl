@@ -1,12 +1,16 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using NetControlClient.Properties;
 using NetControlCommon.Utils;
 
 namespace NetControlClient.Classes
@@ -46,9 +50,12 @@ namespace NetControlClient.Classes
 
         }
 
-        public async Task Shutdown()
+        public async Task Suspend()
         {
-
+            WebRequest req =
+                WebRequest.CreateHttp($"http://{Host}:8080/api/suspend?token={(Host + DateTime.Today).GetHash<SHA256Cng>()}");
+            var resp = await req.GetResponseAsync();
+            resp.Close();
         }
     }
 }
