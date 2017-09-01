@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:NetControlClient"
              StartupUri="Windows/Main/MainWindow.xaml">
     <Application.Resources>
-
+        <ResourceDictionary Source="/PresentationFramework.Aero2;component/themes/aero2.normalcolor.xaml"/>
     </Application.Resources>
 </Application>

@@ -19,14 +19,16 @@
                  SelectedItem="{Binding SelectedServer}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical" ></WrapPanel>
+                    <WrapPanel Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="classes:Server">
-                    <DockPanel>
-                        <Image Source="{Binding Screenshot}" Width="120" Stretch="Uniform" PreviewMouseUp="Image_OnPreviewMouseUp"/>
-                        <TextBlock Padding="8" Background="Red" x:Name="clientNameText" Text="{Binding Host}"
+                    <DockPanel x:Name="clientNameText"  Background="Red" Margin="0">
+                        <Image Source="{Binding Screenshot}" Width="120" Stretch="Uniform" 
+                               DockPanel.Dock="Left" 
+                               PreviewMouseUp="Image_OnPreviewMouseUp"/>
+                        <TextBlock Padding="8" Text="{Binding Host}"
                                    VerticalAlignment="Center" />
                     </DockPanel>
                     <DataTemplate.Triggers>

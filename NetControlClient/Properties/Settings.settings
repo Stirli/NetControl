@@ -8,30 +8,13 @@
   &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
   &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
   &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
-  &lt;string&gt;DESKTOP-DNLCJ2N&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="RefreshPeriod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="ScreenshotSize" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1920,1080</Value>
+      <Value Profile="(Default)">1280,720</Value>
     </Setting>
   </Settings>
 </SettingsFile>
