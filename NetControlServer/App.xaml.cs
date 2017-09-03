@@ -23,15 +23,23 @@ namespace NetControlServer
 
         private async void App_OnStartup(object sender, StartupEventArgs e)
         {
-                if (string.IsNullOrEmpty(Settings.Default.HostName))
+            if (string.IsNullOrEmpty(Settings.Default.HostName))
             {
                 InputWindow inputw = new InputWindow("Введите имя хоста", Environment.MachineName);
                 if (inputw.ShowDialog() == true)
                 {
                     Settings.Default.HostName = inputw.Input.ToString();
                     Settings.Default.Save();
-                    TcpClient client = new TcpClient(Settings.Default.HostName, 7878);
-                    client.Close();
+                    try
+                    {
+                        TcpClient client = new TcpClient(Settings.Default.HostName, 7878);
+                        client.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(exception.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                 }
                 else
                 {

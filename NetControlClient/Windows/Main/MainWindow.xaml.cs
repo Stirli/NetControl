@@ -63,7 +63,7 @@ namespace NetControlClient.Windows.Main
             adding = true;
             try
             {
-                TcpListener listener = new TcpListener(IPAddress.Parse("192.168.0.2"), 7878);
+                TcpListener listener = new TcpListener(IPAddress.Any, 7878);
                 listener.Start();
                 var client = await listener.AcceptTcpClientAsync();
                 var ipEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
