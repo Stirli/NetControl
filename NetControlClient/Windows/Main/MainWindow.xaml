@@ -15,7 +15,10 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <Grid>
-        <Menu><MenuItem Header="Выключить все" Click="MenuItem_OnClick"></MenuItem></Menu>
+        <Menu>
+            <MenuItem Header="Выключить все" Click="SuspendMenuItem_OnClick"/>
+            <MenuItem Header="Добавить компьютер" Click="AddCompMenuItem_OnClick"/>
+        </Menu>
         <ListView x:Name="listBox" Margin="10,25,10,10" ItemsSource="{Binding Servers}" ScrollViewer.VerticalScrollBarVisibility="Disabled"
                  SelectedItem="{Binding SelectedServer}">
             <ListView.ItemsPanel>
@@ -30,8 +33,8 @@
                                DockPanel.Dock="Left" 
                                PreviewMouseUp="Image_OnPreviewMouseUp"/>
                         <Button DockPanel.Dock="Bottom" Content="Выкл." Click="SuspendBtnClick"/>
-                        <TextBlock Padding="8" Text="{Binding Host}"
-                                   VerticalAlignment="Center" />
+                        <Label Padding="8" Content="{Binding Host}"
+                                   VerticalContentAlignment="Center" />
                     </DockPanel>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding IsOnline}" Value="True">

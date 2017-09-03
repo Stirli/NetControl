@@ -53,7 +53,7 @@ namespace NetControlClient.Classes
         public async Task Suspend()
         {
             WebRequest req =
-                WebRequest.CreateHttp($"http://{Host}:8080/api/suspend?token={(Host + DateTime.Today).GetHash<SHA256Cng>()}");
+                WebRequest.CreateHttp($"http://{Host}/api/suspend?token={(Host + DateTime.Today).GetHash<SHA256Cng>()}");
             var resp = await req.GetResponseAsync();
             resp.Close();
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,6 +59,7 @@ namespace NetControlCommon
             {
                 using (var hl = new HttpListener())
                 {
+                   
                     var tasks = new Task[numConcurrent];
                     var cts = new CancellationTokenSource();
 

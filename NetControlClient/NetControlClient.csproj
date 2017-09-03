@@ -64,9 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\ServerJobs.cs" />
     <Compile Include="Classes\ServerPrivate.cs" />
-    <Compile Include="MVVM\AsynchronousCommand.cs" />
     <Compile Include="Utils\MakeBitmapSource.cs" />
-    <Compile Include="MVVM\Command.cs" />
     <Compile Include="Properties\RequestSettings.cs" />
     <Compile Include="Windows\Main\ViewModels\MainViewModel.cs" />
     <Compile Include="Utils\ObservableCollectionHelpers.cs" />
@@ -76,7 +74,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="MVVM\ViewModel.cs" />
     <Compile Include="Windows\ShowImageWindow.xaml.cs">
       <DependentUpon>ShowImageWindow.xaml</DependentUpon>
     </Compile>
@@ -121,6 +118,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonMVVM\CommonMVVM.csproj">
+      <Project>{1af5bec8-7a9f-4042-9d03-8213f2cc6055}</Project>
+      <Name>CommonMVVM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetControlCommon\NetControlCommon.csproj">
       <Project>{9ad8a54b-9284-4a64-891c-2e02cb90b8aa}</Project>
       <Name>NetControlCommon</Name>

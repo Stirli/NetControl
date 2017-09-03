@@ -20,7 +20,7 @@ namespace NetControlClient.Classes
         private async Task UpdateBackBuffer()
         {
             WebRequest req =
-                WebRequest.CreateHttp($"http://{Host}:8080/api/prtsc?size={Settings.Default.ScreenshotSize}");
+                WebRequest.CreateHttp($"http://{Host}/api/prtsc?size={Settings.Default.ScreenshotSize}");
             var resp = await req.GetResponseAsync();
             var stream = resp.GetResponseStream();
             int stride;
@@ -32,7 +32,7 @@ namespace NetControlClient.Classes
 
         private async Task<bool> CheckOnline()
         {
-            WebRequest req = WebRequest.CreateHttp($"http://{Host}:8080/test/echo?mes=message");
+            WebRequest req = WebRequest.CreateHttp($"http://{Host}/test/echo?mes=message");
             req.Timeout = 1000;
             var str = new StringBuilder();
             var resp = await req.GetResponseAsync().CatchAsync();

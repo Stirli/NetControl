@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace NetControlClient.MVVM
+namespace CommonMVVM.MVVM
 {
     /// <summary>
     ///     Класс ViewModelCommand – реализующий интерфейс ICommand, вызывает нужную функцию.

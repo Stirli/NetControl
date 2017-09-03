@@ -80,6 +80,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Size.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Responses\StringResponse.cs" />
     <Compile Include="Controllers\ApiController.cs" />
     <Compile Include="Responses\PngResponse.cs" />
@@ -88,6 +89,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Windows\InputWindow\InputViewModel.cs" />
+    <Compile Include="Windows\InputWindow\InputWindow.xaml.cs">
+      <DependentUpon>InputWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +124,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonMVVM\CommonMVVM.csproj">
+      <Project>{1AF5BEC8-7A9F-4042-9D03-8213F2CC6055}</Project>
+      <Name>CommonMVVM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetControlCommon\NetControlCommon.csproj">
       <Project>{9ad8a54b-9284-4a64-891c-2e02cb90b8aa}</Project>
       <Name>NetControlCommon</Name>
@@ -135,6 +144,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Windows\InputWindow\InputWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

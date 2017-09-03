@@ -2,15 +2,15 @@ using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using CommonMVVM.MVVM;
 using NetControlClient.Classes;
-using NetControlClient.MVVM;
 using NetControlClient.Properties;
 using NetControlClient.Utils;
 using NetControlCommon.Utils;
 
 namespace NetControlClient.Windows.Main.ViewModels
 {
-    internal class MainViewModel : ViewModel
+    public class MainViewModel : ViewModel
     {
         public MainViewModel()
         {

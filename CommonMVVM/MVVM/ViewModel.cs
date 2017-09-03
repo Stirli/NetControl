@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using NetControlClient.Properties;
+using CommonMVVM.Properties;
 
-namespace NetControlClient.MVVM
+namespace CommonMVVM.MVVM
 {
-    internal class ViewModel : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

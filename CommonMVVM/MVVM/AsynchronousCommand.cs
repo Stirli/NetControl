@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Threading;
-using NetControlClient.Properties;
+using CommonMVVM.Properties;
 
-namespace NetControlClient.MVVM
+namespace CommonMVVM.MVVM
 {
     /// <summary>
     ///     Асинхронные команды -  это команды, которые выполняются в отдельных потоках их пула потоков..
